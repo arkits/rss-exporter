@@ -15,5 +15,5 @@ mv ../rss-exporter ../../service
 
 cd ../../service
 
-echo "==> Starting the new Musick!"
+echo "==> Starting the new Service!"
 ./rss-exporter > service.log 2>&1 & 
