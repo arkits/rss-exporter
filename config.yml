@@ -1,0 +1,9 @@
+server:
+  port: 4205
+  name: "rss"
+
+rss:
+  pollRateMs: 10000 
+  feeds:
+    - https://www.theverge.com/rss/index.xml
+    - https://www.androidpolice.com/feed/
