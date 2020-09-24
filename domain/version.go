@@ -20,6 +20,10 @@ func VersionHandler(w http.ResponseWriter, r *http.Request) {
 		Version: viper.GetString("server.version"),
 	}
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == http.MethodOptions {
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(v)
 }

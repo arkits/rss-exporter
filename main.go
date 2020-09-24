@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/arkits/rss-exporter/domain"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
@@ -28,20 +29,21 @@ func main() {
 
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", domain.VersionHandler).Methods(http.MethodGet)
-	r.HandleFunc(fmt.Sprintf("/%s", serviceName), domain.VersionHandler).Methods(http.MethodGet)
+	r.HandleFunc("/", domain.VersionHandler).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc(fmt.Sprintf("/%s", serviceName), domain.VersionHandler).Methods(http.MethodGet, http.MethodOptions)
 
-	r.HandleFunc(fmt.Sprintf("/%s/feed", serviceName), domain.FeedHandler).Methods(http.MethodGet)
+	// Expose Feeds
+	r.HandleFunc(fmt.Sprintf("/%s/feed", serviceName), domain.FeedHandler).Methods(http.MethodGet, http.MethodOptions)
 
 	// Expose Prometheus metrics
-	r.HandleFunc(fmt.Sprintf("/%s/metrics", serviceName), domain.MetricsHandler).Methods(http.MethodGet)
+	r.HandleFunc(fmt.Sprintf("/%s/metrics", serviceName), domain.MetricsHandler).Methods(http.MethodGet, http.MethodOptions)
 
 	r.Use(domain.LoggingMiddleware)
 	r.Use(domain.MetricsMiddleware)
 	r.Use(mux.CORSMethodMiddleware(r))
 
 	log.Printf("Starting server on http://localhost:%v/%v", port, serviceName)
-	http.ListenAndServe(":"+port, r)
+	http.ListenAndServe(":"+port, handlers.CompressHandler(r))
 }
 
 // SetupConfig -  Setup the application config by reading the config file via Viper
