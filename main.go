@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/arkits/rss-api/domain"
+	"github.com/arkits/rss-exporter/domain"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
@@ -36,7 +36,7 @@ func main() {
 	r.Use(domain.MetricsMiddleware)
 	r.Use(mux.CORSMethodMiddleware(r))
 
-	log.Printf("Starting %v on http://localhost:%v/%v", serviceName, port, serviceName)
+	log.Printf("Starting server on http://localhost:%v/%v", port, serviceName)
 	http.ListenAndServe(":"+port, r)
 }
 

@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/VictoriaMetrics/metrics"
-	"github.com/arkits/rss-api/models"
+	"github.com/arkits/rss-exporter/models"
 	"github.com/mmcdole/gofeed"
 	"github.com/spf13/viper"
 )

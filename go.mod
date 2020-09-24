@@ -1,4 +1,4 @@
-module github.com/arkits/rss-api
+module github.com/arkits/rss-exporter
 
 go 1.13
 
