@@ -17,7 +17,7 @@ type Version struct {
 func VersionHandler(w http.ResponseWriter, r *http.Request) {
 	v := Version{
 		Name:    viper.GetString("server.name"),
-		Version: "0.0.1",
+		Version: viper.GetString("server.version"),
 	}
 
 	w.Header().Set("Content-Type", "application/json")

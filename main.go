@@ -10,6 +10,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+var (
+	version string
+)
+
 func init() {
 
 	// Setup the Application wide config through Viper
@@ -48,5 +52,11 @@ func SetupConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Error reading config file! - %s", err)
 	}
+
+	if version == "" {
+		version = "undefined"
+	}
+
+	viper.Set("server.version", version)
 
 }
